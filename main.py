@@ -21,6 +21,7 @@ for index, row in df.iterrows():
             stevec[predmet] = stevec.get(predmet, 0) + 1
 print(stevec)
 
+# če si učenci kot 1. in 2. izbiro niso zaželeli predmeta vsaj 17x ga odstranimo:
 for key, value in stevec.items():
     if value < 17:
         for index, row in df.iterrows():
@@ -139,6 +140,14 @@ for key, values in omejitvePredmetov.items():
 
 for sifra, omejitvePredmeta in omejitvePredmetov_sestete.items():
     Lp_prop += omejitvePredmeta <= 27
+
+    # v primeru, da se šola odloči, da bo izvajala vse ponujene predmete,
+    # lahko dodamo to kodo in program enakomerno razdeli predmete kot najbolj optimalno možnost,
+    # pri čemer je na vsak predmet prijavljenih med 14 in 27 učencev
+"""
+    Lp_prop += omejitvePredmeta >= 14
+    Lp_prop += omejitvePredmeta >= 27
+"""
 
 stevec = {}
 for predmet in predmeti:
