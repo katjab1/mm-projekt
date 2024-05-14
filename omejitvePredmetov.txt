@@ -1,0 +1,16 @@
+omejitvePredmetov = {}
+        spremenljivkePredmetov = []
+        for predmet in predmeti:
+            spremenljivkePredmetov = []
+            for x in Lp_prop.variables():
+                if (x.__str__()[7:]) == predmet:
+                    spremenljivkePredmetov.append(x)
+                omejitvePredmetov[predmet] = spremenljivkePredmetov
+
+        omejitvePredmetov_sestete = {}
+        for key, values in omejitvePredmetov.items():
+            omejitvePredmetov_sestete[key] = sum(values)
+
+        for sifra, omejitvePredmeta in omejitvePredmetov_sestete.items():
+            Lp_prop += omejitvePredmeta >= 14
+            Lp_prop += omejitvePredmeta >= 17

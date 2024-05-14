@@ -1,0 +1,111 @@
+print(df)
+NEM = []
+FRA = []
+LIS = []
+OBL = []
+ANI = []
+URE = []
+VET = []
+SZ = []
+SLZ = []
+BREZ = []
+
+stevecNEM = 0
+stevecFRA = 0
+stevecLIS = 0
+stevecOBL = 0
+stevecANI = 0
+stevecURE = 0
+stevecVET = 0
+stevecSZ = 0
+stevecSLZ = 0
+
+for index, row in df.iterrows():
+    if row["moznost"] == 4:
+        BREZ.append(row["sifra"])
+df.loc[(df.moznost == 4), "izbira1"] = "0"
+df.loc[(df.moznost == 4), "izbira2"] = "0"
+df.loc[(df.moznost == 4), "izbira3"] = "0"
+df.loc[(df.moznost == 4), "izbira4"] = "0"
+
+df.loc[(df.moznost == 3) & ((df.izbira1 == "NEM") | (df.izbira1 == "FRA")), "izbira1"] = "0"
+print(df[df.izbira1 == "0"])
+
+print('\n')
+print(df)
+
+for index, row in df.iterrows():
+    if row["izbira1"] == "NEM":
+        NEM.append(row["sifra"])
+        if (row["moznost"] == 1):
+            df.at[index, 'izbira2'] = "0"
+            df.at[index, 'izbira3'] = "0"
+            df.at[index, 'izbira4'] = "0"
+
+for index, row in df.iterrows():
+    if row["izbira1"] == "FRA":
+        FRA.append(row["sifra"])
+        if (row["moznost"] == 1):
+            df.at[index, 'izbira2'] = "0"
+            df.at[index, 'izbira3'] = "0"
+            df.at[index, 'izbira4'] = "0"
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "NEM") | ((row["izbira1"] == "0") & (row["izbira2"] == "NEM")):
+        stevecNEM += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "FRA") | ((row["izbira1"] == "0") & (row["izbira2"] == "FRA")):
+        stevecFRA += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "LIS") | ((row["izbira1"] == "0") & (row["izbira2"] == "LIS")):
+        stevecLIS += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "OBL") | ((row["izbira1"] == "0") & (row["izbira2"] == "OBL")):
+        stevecOBL += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "ANI") | ((row["izbira1"] == "0") & (row["izbira2"] == "ANI")):
+        stevecANI += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "URE") | ((row["izbira1"] == "0") & (row["izbira2"] == "URE")):
+        stevecURE += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "VET") | ((row["izbira1"] == 0) & (row["izbira2"] == "VET")):
+        stevecVET += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "ŠZ") | ((row["izbira1"] == 0) & (row["izbira2"] == "ŠZ")):
+        stevecSZ += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "SLZ") | ((row["izbira1"] == 0) & (row["izbira2"] == "SLZ")):
+        stevecSLZ += 1
+
+for index, row in df.iterrows():
+    if (row["izbira1"] == "ANI") | ((row["izbira1"] == "0") & (row["izbira2"] == "ANI")):
+        ANI.append(row["sifra"])
+        df.at[index, 'izbira1'] = "0"
+        if row['moznost'] == 3:
+            df.at[index, 'izbira2'] = "0"
+            df.at[index, 'izbira3'] = "0"
+            df.at[index, 'izbira4'] = "0"
+
+for index, row in df.iterrows():
+    if (row["moznost"] == 2) & ((row["izbira1"] == "NEM") | (row["izbira1"] == "FRA")):
+        df.at[index, 'izbira2'] = "0"
+
+for index, row in df.iterrows():
+    if ((row["moznost"] == 1) & (row["izbira1"] == 0)) & ((row["izbira2"] == "NEM") | (row["izbira2"] == "FRA")):
+        df.at[index, 'izbira2'] = "0"
+
+
+print("NEM:", NEM)
+print("FRA: ", FRA)
+print("ANI", ANI)
+with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+    print(df)
