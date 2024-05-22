@@ -1,25 +1,25 @@
 import pandas as pd
 import pulp as p
 
-df = pd.read_excel(r"D:\Faks\MM_projekt\podatki.xlsx", sheet_name="ucenci8_izbire")
-dfPredmeti = pd.read_excel(r"D:\Faks\MM_projekt\podatki.xlsx", sheet_name="predmeti8")
-predmeti = set()
-"""
-for index, row in df.iterrows():
-    predmeti.add(row["izbira1"])
-
-stevec = {}
-for predmet in predmeti:
-    stevec[predmet] = 0"""
-
-stevec = {}
+df = pd.read_excel(r"D:\Faks\MM_projekt\podatki.xlsx", sheet_name="ucenci7_izbire")
+dfPredmeti = pd.read_excel(r"D:\Faks\MM_projekt\podatki.xlsx", sheet_name="predmeti7")
+predmeti_P = set()
 
 for index, row in df.iterrows():
-    predmeti = row["izbira1"], row["izbira2"]
-    for predmet in predmeti:
-        if pd.notna(predmet):  # Preveri, ali je vrednost predmeta veljavna
-            stevec[predmet] = stevec.get(predmet, 0) + 1
+    predmeti_P.add(row["izbira1"])
+print(predmeti_P)
+
+stevec = {predmet: 0 for predmet in predmeti_P}
+
+for value in df["izbira1"]:
+    if value in predmeti_P:  # Preverimo, če je vrednost med predmeti
+        stevec[value] += 1
+
+for value in df["izbira2"]:
+    if value in predmeti_P:
+        stevec[value] += 1
 print(stevec)
+
 
 # če si učenci kot 1. in 2. izbiro niso zaželeli predmeta vsaj 17x ga odstranimo:
 for key, value in stevec.items():
@@ -137,7 +137,9 @@ for predmet in predmeti:
 omejitvePredmetov_sestete = {}
 for key, values in omejitvePredmetov.items():
     omejitvePredmetov_sestete[key] = sum(values)
+print(omejitvePredmetov_sestete)
 
+# nastavimo omejitev maksimalnega števila učencev pri izvajanem predmetu
 for sifra, omejitvePredmeta in omejitvePredmetov_sestete.items():
     Lp_prop += omejitvePredmeta <= 27
 
