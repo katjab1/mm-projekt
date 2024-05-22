@@ -3,20 +3,20 @@ import pulp as p
 
 df = pd.read_excel(r"D:\Faks\MM_projekt\podatki.xlsx", sheet_name="ucenci7_izbire")
 dfPredmeti = pd.read_excel(r"D:\Faks\MM_projekt\podatki.xlsx", sheet_name="predmeti7")
-predmeti_P = set()
+predmeti = set()
 
 for index, row in df.iterrows():
-    predmeti_P.add(row["izbira1"])
-print(predmeti_P)
+    predmeti.add(row["izbira1"])
+print(predmeti)
 
-stevec = {predmet: 0 for predmet in predmeti_P}
+stevec = {predmet: 0 for predmet in predmeti}
 
 for value in df["izbira1"]:
-    if value in predmeti_P:  # Preverimo, če je vrednost med predmeti
+    if value in predmeti:  # Preverimo, če je vrednost med predmeti
         stevec[value] += 1
 
 for value in df["izbira2"]:
-    if value in predmeti_P:
+    if value in predmeti:
         stevec[value] += 1
 print(stevec)
 
